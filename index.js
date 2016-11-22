@@ -29,6 +29,7 @@ function each (obj, iter, _a) {
       if(false === iter(obj[k], _a.concat(k))) return false
     }
   }
+  return true
 }
 
 function map (obj, iter) {
