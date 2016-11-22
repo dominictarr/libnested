@@ -37,6 +37,19 @@ tape('paths', function (t) {
 
   t.deepEqual(R.map(deep, function (v) { return v }), deep)
 
+  var first
+  t.equal(R.each(deep, function (_, path) {
+    if(path.length === 2) {
+      first = path
+      return false
+    }
+  }), false)
+
+  t.deepEqual(first, ['foo', 'bar'])
+
   t.end()
 
 })
+
+
+

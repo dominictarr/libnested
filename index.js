@@ -23,10 +23,11 @@ function set (obj, path, value) {
 function each (obj, iter, _a) {
   _a = _a || []
   for(var k in obj) {
-    if(isObject(obj[k]))
-      each(obj[k], iter, _a.concat(k))
-    else
-      iter(obj[k], _a.concat(k))
+    if(isObject(obj[k])) {
+      if(false === each(obj[k], iter, _a.concat(k))) return false
+    } else {
+      if(false === iter(obj[k], _a.concat(k))) return false
+    }
   }
 }
 
