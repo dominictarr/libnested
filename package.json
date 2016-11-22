@@ -1,11 +1,11 @@
 {
-  "name": "object-recursive",
+  "name": "libnested",
   "description": "",
   "version": "0.0.0",
-  "homepage": "https://github.com/dominictarr/object-recursive",
+  "homepage": "https://github.com/dominictarr/libnested",
   "repository": {
     "type": "git",
-    "url": "git://github.com/dominictarr/object-recursive.git"
+    "url": "git://github.com/dominictarr/libnested.git"
   },
   "dependencies": {},
   "devDependencies": {
