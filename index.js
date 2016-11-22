@@ -1,0 +1,56 @@
+function isObject (o) {
+  return o && 'object' === typeof o && !Array.isArray(o)
+}
+
+function get (obj, path) {
+  for(var i = 0; i < path.length; i++) {
+    if(null == (obj = obj[path[i]])) return obj
+  }
+  return obj
+}
+
+function set (obj, path, value) {
+  if(!obj) throw new Error('must be a an object')
+  for(var i = 0; i < path.length; i++)
+    if(i === path.length - 1)
+      obj[path[i]] = value
+    else if(null == obj[path[i]])
+      obj = (obj[path[i]] = {})
+    else
+      obj = obj[path[i]]
+}
+
+function each (obj, iter, _a) {
+  _a = _a || []
+  for(var k in obj) {
+    if(isObject(obj[k]))
+      each(obj[k], iter, _a.concat(k))
+    else
+      iter(obj[k], _a.concat(k))
+  }
+}
+
+function map (obj, iter) {
+  var o = {}
+  each(obj, function (v, path) {
+    set(o, path, iter(v, path))
+  })
+  return o
+}
+
+function paths (obj) {
+  var p = []
+  each(obj, function (_, path) {
+    p.push(path)
+  })
+  return p
+}
+
+exports.get = get
+exports.set = set
+exports.each = each
+exports.map = map
+exports.paths = paths
+
+
+

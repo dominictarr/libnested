@@ -1,0 +1,34 @@
+# object-recursive
+
+basic functions (map, each, get, set, keys) for nested objects.
+
+## api
+
+### each (object, iter(value, path))
+
+iterate over an object (depth first) and call `iter` with each value.
+`path` is an array with one or more items, which is the path to value.
+`value` will be any item which is not a `{}` object. Arrays are treated as values.
+
+### map (object, iter(value, path) => _value) => _object
+
+map over a nested object (depth first). A new object is returned, containing values returned by `iter`.
+
+### paths (object) => [path...]
+
+return an array of paths into an object.
+
+### get(object, path) => value
+
+get the `value` at `path` within object.
+if `path` does not exist in the `object`, return null.
+
+### set(object, path, value)
+
+set `value` at location `path` within `object`.
+If path is deeper than object goes, intermediate `{}`'s are added. 
+
+
+## License
+
+MIT

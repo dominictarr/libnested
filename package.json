@@ -1,0 +1,19 @@
+{
+  "name": "object-recursive",
+  "description": "",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dominictarr/object-recursive",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dominictarr/object-recursive.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "^4.6.2"
+  },
+  "scripts": {
+    "test": "set -e; for t in test/*.js; do node $t; done"
+  },
+  "author": "'Dominic Tarr' <dominic.tarr@gmail.com> (dominictarr.com)",
+  "license": "MIT"
+}
