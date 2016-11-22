@@ -18,6 +18,7 @@ function set (obj, path, value) {
       obj = (obj[path[i]] = {})
     else
       obj = obj[path[i]]
+  return value
 }
 
 function each (obj, iter, _a) {

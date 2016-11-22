@@ -47,6 +47,11 @@ tape('paths', function (t) {
 
   t.deepEqual(first, ['foo', 'bar'])
 
+  var _a = [1,2,3]
+  var a = R.set(deep, ['rom', 'pan'], _a)
+  t.equal(a, _a)
+
+
   t.end()
 
 })
