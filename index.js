@@ -33,12 +33,12 @@ function each (obj, iter, _a) {
   return true
 }
 
-function map (obj, iter) {
-  var o = {}
-  each(obj, function (v, path) {
-    set(o, path, iter(v, path))
+function map (obj, iter, out) {
+  var out = out || {}
+  each(obj, function (val, path) {
+    set(out, path, iter(val, path))
   })
-  return o
+  return out
 }
 
 function paths (obj) {
