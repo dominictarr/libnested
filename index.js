@@ -10,7 +10,7 @@ function get (obj, path, dft) {
 }
 
 function set (obj, path, value) {
-  if(!obj) throw new Error('must be a an object')
+  if(!obj) throw new Error('libnested.set: first arg must be an object')
   for(var i = 0; i < path.length; i++)
     if(i === path.length - 1)
       obj[path[i]] = value
@@ -21,13 +21,13 @@ function set (obj, path, value) {
   return value
 }
 
-function each (obj, iter, _a) {
-  _a = _a || []
+function each (obj, iter, path) {
+  path = path || []
   for(var k in obj) {
     if(isObject(obj[k])) {
-      if(false === each(obj[k], iter, _a.concat(k))) return false
+      if(false === each(obj[k], iter, path.concat(k))) return false
     } else {
-      if(false === iter(obj[k], _a.concat(k))) return false
+      if(false === iter(obj[k], path.concat(k))) return false
     }
   }
   return true
@@ -42,11 +42,11 @@ function map (obj, iter, out) {
 }
 
 function paths (obj) {
-  var p = []
+  var out = []
   each(obj, function (_, path) {
-    p.push(path)
+    out.push(path)
   })
-  return p
+  return out
 }
 
 exports.get = get
@@ -54,6 +54,3 @@ exports.set = set
 exports.each = each
 exports.map = map
 exports.paths = paths
-
-
-
