@@ -2,9 +2,9 @@ function isObject (o) {
   return o && 'object' === typeof o && !Array.isArray(o)
 }
 
-function get (obj, path) {
+function get (obj, path, dft) {
   for(var i = 0; i < path.length; i++) {
-    if(null == (obj = obj[path[i]])) return obj
+    if(null == (obj = obj[path[i]])) return dft
   }
   return obj
 }
