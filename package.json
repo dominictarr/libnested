@@ -12,7 +12,7 @@
     "tape": "^4.6.2"
   },
   "scripts": {
-    "test": "set -e; for t in test/*.js; do node $t; done"
+    "test": "node test.js"
   },
   "author": "'Dominic Tarr' <dominic.tarr@gmail.com> (dominictarr.com)",
   "license": "MIT"
