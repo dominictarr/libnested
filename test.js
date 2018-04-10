@@ -5,6 +5,24 @@ var R = require('./')
 tape('paths', function (t) {
 
   t.deepEqual(
+    R.get({foo: true, bar: false}, 'foo'),
+    true
+  )
+  t.deepEqual(
+    R.get({foo: true, bar: false}, 'bar'),
+    false
+  )
+  t.deepEqual(
+    R.get({foo: true, bar: false}, ['foo']),
+    true
+  )
+  t.deepEqual(
+    R.get({foo: true, bar: false}, ['bar']),
+    false
+  )
+
+
+  t.deepEqual(
     R.paths({foo: {bar: true}, baz: 2}),
     [
       ['foo', 'bar'],
@@ -52,9 +70,23 @@ tape('paths', function (t) {
   t.equal(a, _a)
 
 
+
+  var a = R.set(deep, 'zak', 53)
+  var a = R.set(deep, ['rom', 'pan', 2], 30)
+
+  t.deepEqual(
+    deep,
+    {
+      foo: {bar: true},
+      baz: 2,
+      blurg: {fop: {hif: []}},
+      rom: {pan: [1,2,30]},
+      zak: 53
+    }
+  )
+
   t.end()
 
 })
-
 
 
