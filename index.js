@@ -2,7 +2,12 @@ function isObject (o) {
   return o && 'object' === typeof o && !Array.isArray(o)
 }
 
+function isBasic (b) {
+  return 'string' === typeof b || 'number' === typeof b
+}
+
 function get (obj, path) {
+  if(isBasic(path)) return obj[path]
   for(var i = 0; i < path.length; i++) {
     if(null == (obj = obj[path[i]])) return obj
   }
@@ -11,6 +16,7 @@ function get (obj, path) {
 
 function set (obj, path, value) {
   if(!obj) throw new Error('must be a an object')
+  if(isBasic(path)) return obj[path] = value
   for(var i = 0; i < path.length; i++)
     if(i === path.length - 1)
       obj[path[i]] = value
@@ -54,6 +60,7 @@ exports.set = set
 exports.each = each
 exports.map = map
 exports.paths = paths
+
 
 
 
