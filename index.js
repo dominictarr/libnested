@@ -40,7 +40,7 @@ function each (obj, iter, path) {
 }
 
 function map (obj, iter, out) {
-  var out = out || {}
+  var out = out || Array.isArray(obj) ? [] : {}
   each(obj, function (val, path) {
     set(out, path, iter(val, path))
   })
@@ -55,10 +55,15 @@ function paths (obj) {
   return out
 }
 
+function id (e) { return e }
+
+function clone (obj) {
+  return map(obj, id)
+}
+
 exports.get = get
 exports.set = set
 exports.each = each
 exports.map = map
 exports.paths = paths
-
-
+exports.clone = clone
