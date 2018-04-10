@@ -85,8 +85,21 @@ tape('paths', function (t) {
     }
   )
 
+  t.deepEqual(
+    deep,
+    R.clone(deep)
+  )
+
+  t.notEqual(
+    deep,
+    R.clone(deep)
+  )
+
+
   t.end()
 
 })
+
+
 
 
