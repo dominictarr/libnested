@@ -25,11 +25,18 @@ return an array of paths into an object.
 get the `value` at `path` within object.
 if `path` does not exist in the `object`, return `default`.
 
+`path` may be an array of strings or numbers, or a single string or number.
+
 ### set(object, path, value)
 
 set `value` at location `path` within `object`.
-If path is deeper than object goes, intermediate `{}`'s are added. 
+If path is deeper than object goes, intermediate `{}`'s are added.
 
+`path` may be an array of strings or numbers, or a single string or number.
+
+### clone (object)
+
+return a new object with the same structure and primitive values as `object`
 
 ## License
 
