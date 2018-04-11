@@ -6,7 +6,7 @@ function isBasic (b) {
   return 'string' === typeof b || 'number' === typeof b
 }
 
-function get (obj, path) {
+function get (obj, path, dft) {
   if(isBasic(path)) return obj[path]
   for(var i = 0; i < path.length; i++) {
     if(null == (obj = obj[path[i]])) return dft
