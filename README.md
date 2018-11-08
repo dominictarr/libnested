@@ -34,6 +34,8 @@ If path is deeper than object goes, intermediate `{}`'s are added.
 
 `path` may be an array of strings or numbers, or a single string or number.
 
+`object` will be mutated.
+
 ### clone (object)
 
 return a new object with the same structure and primitive values as `object`
