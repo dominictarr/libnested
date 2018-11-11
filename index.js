@@ -1,5 +1,5 @@
-function isObject (o) {
-  return o && 'object' === typeof o && !Array.isArray(o)
+function isObject (o, allowArray) {
+  return o && 'object' === typeof o && (allowArray || !Array.isArray(o))
 }
 
 function isBasic (b) {
@@ -14,6 +14,10 @@ function get (obj, path, dft) {
   return obj
 }
 
+function isNonNegativeInteger (i) {
+  return Number.isInteger(i) && i >= 0
+}
+
 function set (obj, path, value) {
   if(!obj) throw new Error('libnested.set: first arg must be an object')
   if(isBasic(path)) return obj[path] = value
@@ -21,44 +25,69 @@ function set (obj, path, value) {
     if(i === path.length - 1)
       obj[path[i]] = value
     else if(null == obj[path[i]])
-      obj = (obj[path[i]] = {})
+      obj = (obj[path[i]] = isNonNegativeInteger(path[i]) ? [] : {})
     else
       obj = obj[path[i]]
   return value
 }
 
-function each (obj, iter, path) {
+function each (obj, iter, includeArrays, path) {
   path = path || []
-  for(var k in obj) {
-    if(isObject(obj[k])) {
-      if(false === each(obj[k], iter, path.concat(k))) return false
-    } else {
-      if(false === iter(obj[k], path.concat(k))) return false
+  //handle array separately, so that arrays can have integer keys
+  if(Array.isArray(obj)) {
+    if(!includeArrays) return false
+    for(var k = 0; k < obj.length; k++) {
+      //loop content is duplicated, so that return works
+      var v = obj[k]
+      if(isObject(v, includeArrays)) {
+        if(false === each(v, iter, includeArrays, path.concat(k)))
+          return false
+      } else {
+        if(false === iter(v, path.concat(k))) return false
+      }
+    }
+  }
+  else {
+    for(var k in obj) {
+      //loop content is duplicated, so that return works
+      var v = obj[k]
+      if(isObject(v, includeArrays)) {
+        if(false === each(v, iter, includeArrays, path.concat(k)))
+          return false
+      } else {
+        if(false === iter(v, path.concat(k))) return false
+      }
     }
   }
   return true
 }
 
-function map (obj, iter, out) {
+function map (obj, iter, out, includeArrays) {
   var out = out || Array.isArray(obj) ? [] : {}
   each(obj, function (val, path) {
     set(out, path, iter(val, path))
-  })
+  }, includeArrays)
   return out
 }
 
-function paths (obj) {
+function paths (obj, incluedArrays) {
   var out = []
   each(obj, function (_, path) {
     out.push(path)
-  })
+  }, incluedArrays)
   return out
 }
 
 function id (e) { return e }
 
+//note, cyclic objects are not supported.
+//will cause an stack overflow.
 function clone (obj) {
-  return map(obj, id)
+  if(!isObject(obj, true)) return obj
+  var _obj
+  _obj = Array.isArray(obj) ? [] : {}
+  for(var k in obj) _obj[k] = clone(obj[k])
+  return _obj
 }
 
 exports.get = get
@@ -67,3 +96,7 @@ exports.each = each
 exports.map = map
 exports.paths = paths
 exports.clone = clone
+exports.copy = clone
+
+
+
