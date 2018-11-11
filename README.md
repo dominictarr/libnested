@@ -4,7 +4,7 @@ basic functions (map, each, get, set, keys) for nested objects.
 
 ## api
 
-### each (object, iter(value, path)) => boolean
+### each (object, iter(value, path), includeArrays?) => boolean
 
 iterate over an object (depth first) and call `iter` with each value.
 `path` is an array with one or more items, which is the path to value.
@@ -12,9 +12,16 @@ iterate over an object (depth first) and call `iter` with each value.
 
 if `iter` returns false then each will stop traversing the object and return false also.
 
-### map (object, iter(value, path) => nextValue, output) => output
+if `includeArrays` is true (defaults to false) then arrays
+encounted will be treated like objects. If `includeArrays`
+is not true, arrays will be treated like `values`.
+
+### map (object, iter(value, path) => nextValue, output, includeArrays?) => output
 
 map over a nested object (depth first). A new object is returned (unless `output` is given), containing values returned by `iter`.
+
+if `includeArrays` is true, the contents of arrays will be mapped,
+otherwise only the arrays themselves will be.
 
 ### paths (object) => [path...]
 
@@ -40,6 +47,9 @@ If path is deeper than object goes, intermediate `{}`'s are added.
 
 return a new object with the same structure and primitive values as `object`
 
+cyclic objects are not supported - will produce a `RangeError` (stackoverflow)
+
 ## License
 
 MIT
+
