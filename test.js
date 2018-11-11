@@ -124,4 +124,20 @@ tape('include arrays', function (t) {
   t.end()
 })
 
+tape('clone does not leave an array reference', function (t) {
+  var a = {foo: [1]}
+  t.deepEqual(R.clone(a), a)
+  t.notEqual(a.foo, R.clone(a).foo)
+  var b = {foo: [{}], bar: {}}
+  t.deepEqual(R.clone(b), b)
+  t.notEqual(b.foo, R.clone(b).foo)
+  t.notEqual(b.foo[0], R.clone(b).foo[0])
+  t.notEqual(b.bar, R.clone(b).bar)
+
+  t.end()
+})
+
+
+
+
 
