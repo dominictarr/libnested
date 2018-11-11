@@ -100,6 +100,28 @@ tape('paths', function (t) {
 
 })
 
+tape('include arrays', function (t) {
+  var deep = {foo: {bar: true}, baz: 2, blurg: {fop: {hif: [1,2,3]}}}
 
+  t.deepEqual(
+    R.paths(deep, true),
+    [
+      ['foo', 'bar'],
+      ['baz'],
+      ['blurg', 'fop', 'hif', 0],
+      ['blurg', 'fop', 'hif', 1],
+      ['blurg', 'fop', 'hif', 2]
+    ]
+  )
+
+  var o = {}
+  R.set(o, ['hello', 0, 'okay'], true),
+  t.deepEqual(
+    o,
+    {hello: [{okay: true}]}
+  )
+
+  t.end()
+})
 
 
