@@ -7,6 +7,7 @@ function isBasic (b) {
 }
 
 function get (obj, path, dft) {
+  if(!isObject(obj, true)) return dft
   if(isBasic(path)) return obj[path]
   for(var i = 0; i < path.length; i++) {
     if(null == (obj = obj[path[i]])) return dft
