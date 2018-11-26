@@ -21,6 +21,11 @@ tape('paths', function (t) {
     false
   )
 
+  t.deepEqual(
+    R.get(null, ['bar']),
+    undefined
+  )
+
 
   t.deepEqual(
     R.paths({foo: {bar: true}, baz: 2}),
@@ -136,6 +141,7 @@ tape('clone does not leave an array reference', function (t) {
 
   t.end()
 })
+
 
 
 
