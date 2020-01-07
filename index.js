@@ -26,7 +26,7 @@ function set (obj, path, value) {
     if(i === path.length - 1)
       obj[path[i]] = value
     else if(null == obj[path[i]])
-      obj = (obj[path[i]] = isNonNegativeInteger(path[i]) ? [] : {})
+      obj = (obj[path[i]] = isNonNegativeInteger(path[i+1]) ? [] : {})
     else
       obj = obj[path[i]]
   return value
@@ -98,6 +98,3 @@ exports.map = map
 exports.paths = paths
 exports.clone = clone
 exports.copy = clone
-
-
-
