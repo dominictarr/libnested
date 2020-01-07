@@ -129,6 +129,16 @@ tape('include arrays', function (t) {
   t.end()
 })
 
+tape('set', function (t) {
+  var o = {}
+  R.set(o, ['foo', 0], true)
+  t.deepEqual(o, {foo: [true]})
+  R.set(o, ['foo', 1], false)
+  t.deepEqual(o, {foo: [true, false]})
+  t.ok(Array.isArray(o.foo), 'created an array in the right place')
+  t.end()
+})
+
 tape('clone does not leave an array reference', function (t) {
   var a = {foo: [1]}
   t.deepEqual(R.clone(a), a)
@@ -141,9 +151,3 @@ tape('clone does not leave an array reference', function (t) {
 
   t.end()
 })
-
-
-
-
-
-
