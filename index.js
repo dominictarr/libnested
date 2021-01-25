@@ -27,7 +27,7 @@ function set (obj, path, value) {
       obj[path[i]] = value
     else if(null == obj[path[i]])
       obj = (obj[path[i]] = isNonNegativeInteger(path[i+1]) ? [] : {})
-    else
+    else if (!(isPrototypePolluted(path[i])))
       obj = obj[path[i]]
   return value
 }
@@ -89,6 +89,10 @@ function clone (obj) {
   _obj = Array.isArray(obj) ? [] : {}
   for(var k in obj) _obj[k] = clone(obj[k])
   return _obj
+}
+
+function isPrototypePolluted(key) {
+  return ['__proto__', 'constructor', 'prototype'].includes(key)
 }
 
 exports.get = get
