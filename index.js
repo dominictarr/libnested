@@ -22,13 +22,17 @@ function isNonNegativeInteger (i) {
 function set (obj, path, value) {
   if(!obj) throw new Error('libnested.set: first arg must be an object')
   if(isBasic(path)) return obj[path] = value
-  for(var i = 0; i < path.length; i++)
+  for(var i = 0; i < path.length; i++) {
+    if (isPrototypePolluted(path[i]))
+      continue
+
     if(i === path.length - 1)
       obj[path[i]] = value
     else if(null == obj[path[i]])
       obj = (obj[path[i]] = isNonNegativeInteger(path[i+1]) ? [] : {})
-    else if (!(isPrototypePolluted(path[i])))
+    else
       obj = obj[path[i]]
+  }
   return value
 }
 
@@ -92,7 +96,7 @@ function clone (obj) {
 }
 
 function isPrototypePolluted(key) {
-  return ['__proto__', 'constructor', 'prototype'].includes(key)
+  return ['__proto__', 'constructor', 'prototype'].includes(key.toString())
 }
 
 exports.get = get

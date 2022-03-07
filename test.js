@@ -151,3 +151,14 @@ tape('clone does not leave an array reference', function (t) {
 
   t.end()
 })
+
+tape('prototype pollution', function (t) {
+  t.notEqual({}.polluted, 'yes')
+  R.set({}, ['__proto__','polluted'], 'yes');
+  t.notEqual({}.polluted, 'yes')
+  R.set({}, [['__proto__'], 'polluted'], 'yes')
+  t.notEqual({}.polluted, 'yes')
+  R.set({}, [['constructor', 'prototype'], 'polluted'], 'yes')
+  t.notEqual({}.polluted, 'yes')
+  t.end()
+})
